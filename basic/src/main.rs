@@ -73,9 +73,20 @@ fn main() {
     //ref + guard
     let value = 1;
     match value {
-        ref r if r>=&0i32  =>println!("  0<{:?}", r),
+        ref r if r>=&0i32  =>println!("guard  0<{:?}", r),
         _=>println!("0"),
     }
 
-   
+   // binding value
+   match value {
+    n @ 1 =>println!("binding  0<{:?}", n),
+        _=>println!("0"),
+    }
+
+    //closure
+    fn  clofun   (i: i32) -> i32 { i + 1 }
+    let clovar =|i| i+1;
+    println!("var: {} ,function: {} ", clovar(value),clofun(value));
+
+    //capturing
 }
