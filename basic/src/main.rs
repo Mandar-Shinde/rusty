@@ -1,3 +1,4 @@
+
 use std::convert::From;
 use std::fmt;
 
@@ -23,11 +24,14 @@ impl fmt::Display for Point{
         write!(f," point is {}",self.x)
     }
 }
+
 // struct of struct
+#[allow(dead_code)]
 struct Rect{
     up:Point,down:Point
 }
 
+#[allow(dead_code)]
 enum Canvas{
     Whiteboard,
     Rect,
@@ -46,13 +50,18 @@ fn draw(event:Canvas){
     }
 }
 
+//anonymity
+fn apply<T>(f:T) where T:FnOnce(){
+    f();
+}
+
 fn main() {
     println!("Hello, world!");
 
     // struct operation
     let name = "Peter";
     let age = 27;
-    let peter = Person { name, age };
+    let _peter = Person { name, age };
 
     // stuct
     let point_obj : Point=Point {x:1,y:1};
@@ -86,7 +95,21 @@ fn main() {
     //closure
     fn  clofun   (i: i32) -> i32 { i + 1 }
     let clovar =|i| i+1;
-    println!("var: {} ,function: {} ", clovar(value),clofun(value));
+    println!("closure var: {} ,clofn: {} ", clovar(value),clofun(value));
 
-    //capturing
+    //capturing -take ownership
+    let store = vec![1, 2, 3];
+    let clocap = move |n| store.contains(n);
+    println!("closure capture: {} ", clocap(&1));
+
+    //template Fn, FnMut, and FnOnce
+    let print = || println!("template fn:{}", &1);
+    apply(print);
+
+    //Diverging functions - non returing
+    // let x: ! = panic!("This call never returns.");
+    // println!("You will never see this line!");
+
+    //Higher Order Functions
+
 }
