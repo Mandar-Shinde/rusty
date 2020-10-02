@@ -7,7 +7,7 @@ use std::sync::mpsc;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
-
+use std::io::{self, BufRead};
 
 static count:i32=5;
 
@@ -71,7 +71,7 @@ fn MakeFile()
        Ok(file) => file,
    };
 
-   match file.write_all("hello test".as_bytes()){
+   match file.write_all("hello test1\nhello test2\nhello test3\n".as_bytes()){
        Err(why) => panic!("write fail {}",why),
        Ok(_)=>println!("written"),
    }
@@ -81,12 +81,22 @@ fn MakeFile()
        Ok(file) => file,
    };
 
+   
  
    let mut s = String::new();
    match file.read_to_string(&mut s) {
        Err(why) => panic!("-------------- {}: {}", display, why),
        Ok(_) => print!("{} contains:\n{}", display, s),
    }
+
+
+    for line in io::BufReader::new(file).lines() {
+        if let Ok(ip) = line {
+            println!("line {}", ip);
+        }
+    
+}
+
 }
 
 fn main() {
