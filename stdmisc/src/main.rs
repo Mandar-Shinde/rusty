@@ -81,26 +81,32 @@ fn MakeFile()
        Ok(file) => file,
    };
 
-   
- 
    let mut s = String::new();
    match file.read_to_string(&mut s) {
        Err(why) => panic!("-------------- {}: {}", display, why),
        Ok(_) => print!("{} contains:\n{}", display, s),
    }
 
-
     for line in io::BufReader::new(file).lines() {
         if let Ok(ip) = line {
             println!("line {}", ip);
-        }
-    
+        }    
 }
 
 }
+
+
+fn RunUnsafe(){
+    let p:*const u32=&10;
+    unsafe{
+         println!("val:{}, address {:?}",*p,p); //dereferencing p
+    }
+}
+
 
 fn main() {
     RunThread();
     RunChannels();
     MakeFile();
+    RunUnsafe();
 }
