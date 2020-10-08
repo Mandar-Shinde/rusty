@@ -22,7 +22,15 @@ fn parsejson()
 
 println!("Printed:\n {}",parsed);
 
-println!("Printed Pretty:\n {:#}",parsed)
+println!("Printed Pretty:\n {:#}",parsed);
+
+println!("Printed val:\n {:#}",parsed["age"]);
+    if(parsed["canJSON"].as_bool().unwrap())
+    {
+        println!(" must be true");
+    }else{
+        println!(" must be false");
+    }
 }
 
 fn main() {
